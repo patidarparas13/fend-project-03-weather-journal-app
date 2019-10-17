@@ -19,6 +19,21 @@ app.use(cors());
 // Initialize the main project folder
 app.use(express.static("website"));
 
+app.get("/api/v1/entry", (req, res) => {
+  res.json(projectData);
+});
+
+app.post("/api/v1/entry", (req, res) => {
+  const { temperature, date, feeling } = req.body;
+  Object.assign(projectData, {
+    temperature: `${temperature}°C`,
+    date,
+    feeling
+  });
+
+  res.status(201).json(projectData);
+});
+
 // Setup Server
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
